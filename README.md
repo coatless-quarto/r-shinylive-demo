@@ -1,8 +1,18 @@
 # r-shinylive-demo
 
-Interested in deploying a Shiny application for R within Quarto? This repository is for you!
+Interested in deploying a Shiny application for R within Quarto? This is the repository for you! Here's a summary of what you can find in the repository:
 
-For the demo, we're showing the App used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile! ([Source Code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299))
+- **[index.qmd](index.qmd):** This file contains a tutorial that provides step-by-step instructions and guidance on using `r-shinylive` to embed Shiny applications in Quarto documents.
+
+- **[R-shinylive-demo.qmd](R-shinylive-demo.qmd):** Inside this file, you can find a working example of the Shiny app that was used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1). Please note that Joe's presentation contains files that are large in size and is not recommended for mobile devices. You can also refer to the [source code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299) of the demo.
+
+- **[template-r-shinylive.qmd](template-r-shinylive.qmd):** This file provides a skeleton template that you can use to populate your own Shiny apps. It serves as a starting point for creating your interactive Quarto documents with Shiny applications. Please note that you will still need to install the required software as mentioned in the tutorial.
+
+- **[_quarto.yml](_quarto.yml):** This configuration file is essential for Quarto and `shinylive` to work together effectively. 
+
+- **[.github/workflows/publish-demo.yml](.github/workflows/publish-demo.yml):** This file contains a sample workflow configuration for creating a website that embeds R Shiny applications using GitHub Actions and deploys it to GitHub Pages.
+
+Let's dive in! 
 
 ## Sample App
 

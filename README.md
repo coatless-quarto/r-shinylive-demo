@@ -16,7 +16,7 @@ Let's dive in!
 
 ## Sample App
 
-We'll be walking through the process of creating the following R ShinyLive application.
+We'll be walking through the process of creating the following R Shinylive application.
 
 ![Example of the Shinylive app running in a Quarto HTML Document](images/demo-r-shinylive-app-inbrowser.gif)
 
@@ -24,7 +24,7 @@ You can see the live version built from the repository here:
 
 <https://coatless-quarto.github.io/r-shinylive-demo/>
 
-# Using r-shinylive for Static Shiny Apps in Quarto Documents
+# Using r-shinylive for Serverless Shiny Apps in Quarto Documents
 
 Are you interested in creating your own Quarto document with embedded static Shiny apps? This tutorial will guide you through the process of using the `r-shinylive` R package to achieve just that. Let's get started!
 
@@ -76,9 +76,7 @@ filters:
   - shinylive
 ```
 
-**Step 5:** Place your Shiny application code within your Quarto file (`.qmd`) as shown in the following example:
-
-You can insert the code for a Shiny application in a code block marked with `{shinylive-r}`. Below is a skeletal example of how your code block might look:
+**Step 5:** You can insert the code for a Shiny application in a code block marked with `{shinylive-r}`. Below is a skeletal example of how your code block might look:
 
 ````md
 ---
@@ -119,7 +117,6 @@ With this in mind, let's use Joe's shiny app inside our code block. So, we'll en
 #| standalone: true
 #| viewerHeight: 600
 library(shiny)
-library(bslib)
 
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
@@ -140,8 +137,14 @@ server <- function(input, output, session) {
   })
   
   output$plot <- renderPlot({
-    hist(data(), breaks = 40, xlim = c(-2, 2), ylim = c(0, 1),
-      lty = "blank", xlab = "value", freq = FALSE, main = ""
+    hist(data(),
+      breaks = 40,
+      xlim = c(-2, 2),
+      ylim = c(0, 1),
+      lty = "blank",
+      xlab = "value",
+      freq = FALSE,
+      main = ""
     )
     
     x <- seq(from = -2, to = 2, length.out = 500)
@@ -154,8 +157,10 @@ server <- function(input, output, session) {
 
     legend(legend = c("Normal", "Mean", "Sample mean"),
       col = c("black", "red", "blue"),
-      lty = c(1, 2, 1), lwd = c(1, lwd, lwd),
-      x = 1, y = 0.9
+      lty = c(1, 2, 1),
+      lwd = c(1, lwd, lwd),
+      x = 1,
+      y = 0.9
     )
   }, res=140)
 }
@@ -165,10 +170,7 @@ shinyApp(ui = ui, server = server)
 ```
 ````
 
-You can view a standalone version of Joe's app here:
-
-<https://github.com/coatless-quarto/r-shinylive-demo/blob/main/joe-cheng-r-shinylive.qmd>
-
+You can view a standalone version of Joe's app here: [R-shinylive-demo.qmd](https://github.com/coatless-quarto/r-shinylive-demo/blob/main/R-shinylive-demo.qmd)
 
 ## Rendering Your Quarto Document
 

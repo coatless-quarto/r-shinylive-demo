@@ -18,7 +18,7 @@ For the demo, we're showing the source code used in Joe Cheng's [posit::conf(202
 
 ## Sample Application 
 
-We'll be walking through the process of creating the following R ShinyLive application. Please be aware that it may take some time to load.
+We'll be walking through the process of creating the following R Shinylive application. Please be aware that it may take some time to load.
 
 ```{shinylive-r}
 #| standalone: true
@@ -77,7 +77,7 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 ```
 
-# Tutorial: Using r-shinylive for Static Shiny Apps in Quarto Documents
+# Using r-shinylive for Serverless Shiny Apps in Quarto Documents
 
 Are you interested in creating your own Quarto document with embedded static Shiny apps? This tutorial will guide you through the process of using the `r-shinylive` R package to achieve just that. Let's get started!
 
@@ -129,9 +129,7 @@ filters:
   - shinylive
 ```
 
-**Step 5:** Place your Shiny application code within your Quarto file (`.qmd`) as shown in the following example:
-
-You can insert the code for a Shiny application in a code block marked with `{shinylive-r}`. Below is a skeletal example of how your code block might look:
+**Step 5:** You can insert the code for a Shiny application in a code block marked with `{shinylive-r}`. Below is a skeletal example of how your code block might look:
 
 ````md
 ---
@@ -225,7 +223,7 @@ shinyApp(ui = ui, server = server)
 ```
 ````
 
-You can view a standalone version of Joe's app here: <R-shinylive-demo.qmd>
+You can view a standalone version of Joe's app here: [R-shinylive-demo.qmd](https://github.com/coatless-quarto/r-shinylive-demo/blob/main/R-shinylive-demo.qmd)
 
 ## Rendering Your Quarto Document
 

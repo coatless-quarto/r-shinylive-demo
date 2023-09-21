@@ -2,7 +2,7 @@
 
 Interested in deploying a Shiny application for R within Quarto? This repository is for you!
 
-We're showing the source code used in Joe Cheng's [posit::conf(2023) demo](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299)
+For the demo, we're showing the source code used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile! ([Source Code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299))
 
 ## Sample App
 

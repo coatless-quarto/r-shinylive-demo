@@ -1,6 +1,17 @@
 project:
-  title: "R-shinylive-demo"
+  type: website
   resources: 
   - shinylive-sw.js
 
-
+website:
+  title: "r-shinylive in Quarto"
+  navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Tutorial (Home)"
+        file: index.qmd
+      - text: "Joe's Shiny App"
+        file: joe-cheng-r-shinylive.qmd
+      - text: "Skeletal Template"
+        file: template-r-shinylive.qmd

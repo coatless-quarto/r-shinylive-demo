@@ -36,7 +36,9 @@ quarto create project default
 During project creation, you'll be prompted to provide a directory name. This name will also serve as the Quarto document filename. Please note that if you skip this step, a `_quarto.yml` file won't be generated, resulting in an error when you attempt to render the document.
 
 ```md
-ERROR: The shinylive extension must be used in a Quarto project directory (with a _quarto.yml file).
+ERROR:
+The shinylive extension must be used in a Quarto project directory
+(with a _quarto.yml file).
 ```
 
 ## Installing the Quarto Extension for r-shinylive

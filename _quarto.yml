@@ -1,5 +1,6 @@
 project:
   title: "R-shinylive-demo"
-
+  resources: 
+  - shinylive-sw.js
 
 

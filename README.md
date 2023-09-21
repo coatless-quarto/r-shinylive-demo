@@ -109,6 +109,124 @@ During the render process, the output directory should contain the following str
 └── shinylive-sw.js
 ```
 
+## Folder Structure
+
+During the render process, the output directory should contain the following structure:
+
+```sh
+.
+├── _extensions
+│   └── quarto-ext/shinylive # Added by 'quarto add'
+├── _quarto.yml              # Created by 'quarto create'
+├── R-shinylive-demo.html    # Rendered Document
+├── R-shinylive-demo.qmd     # Quarto Document with Shiny App
+├── R-shinylive-demo_files   # Supporting files
+└── shinylive-sw.js          # Service Worker
+```
+
+## Publishing Your Quarto Document
+
+**Step 7:** Once you are satisfied with your shinylive app and Quarto document, it's time to publish your work. There are multiple options for publishing with Quarto, and we'll present two of them. Choose the option that best suits your needs for sharing and distributing your Quarto document with your embedded shinylive app.
+
+**Option 1: Publish to GitHub Pages**
+
+To make your Quarto document accessible on [GitHub Pages via Quarto](https://quarto.org/docs/publishing/github-pages.html), use the following command in your terminal:
+
+```sh
+quarto publish gh-pages
+```
+
+This option is great if you want to share your document through a GitHub Pages website.
+
+**Option 2: Publish to Quarto Pub**
+
+Alternatively, you can publish your Quarto document on [Quarto Pub via Quarto](https://quarto.org/docs/publishing/quarto-pub.html). Use the following command in your terminal:
+
+```sh
+quarto publish quarto-pub
+```
+
+This option provides you with a shareable link for easy access by others and is a good choice if you prefer a dedicated platform for your documents.
+
+### A Quick Fix for Service Worker Inclusion
+
+If you've encountered issues with the `quarto publish` command not including the required service worker JavaScript file, you can quickly resolve this by adding the following lines under the `html` key in your document header:
+
+```yaml
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+```
+
+This addition ensures that the necessary service worker JavaScript file (`shinylive-sw.js`) is included when you publish your Quarto document. The Quarto team is aware of the issue regarding [service workers not being uploaded automatically from extensions](https://github.com/quarto-dev/quarto-cli/issues/6828).
+
+If you encounter this issue, you may see an error message in your browser's JavaScript console that looks like:
+
+```
+Uncaught Error: ServiceWorker controller was not found!
+The above error occurred in the <Viewer> component:
+```
+
+By implementing this quick fix, you can prevent this error and ensure the proper functioning of your shinylive app within your Quarto document.
+
+## Advanced (Optional Step): Continuous Publishing Using GitHub Actions
+
+For advanced users, you can set up continuous integration (CI) to automatically update your application whenever changes are committed to the Quarto document. This process involves creating a workflow for [GitHub Actions](https://github.com/features/actions) and utilizing actions from [`r-lib/actions`](https://github.com/r-lib/actions) (for R installation) and [`quarto-dev/quarto-actions`](https://github.com/quarto-dev/quarto-actions) (for Quarto setup and publishing).
+
+Follow these steps to configure continuous publishing:
+
+**Step 1:** Create a `.github/` folder in your repository if it doesn't already exist. Place the `workflows/` folder inside it. Then, create a workflow configuration file called `publish-website.yml` with the following content:
+
+```yaml
+on:
+  push:
+    branches: [main, master]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+name: demo-website
+
+jobs:
+  demo-website:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+    permissions:
+      contents: write
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup R"
+        uses: r-lib/actions/setup-r@v2
+
+      - name: "Setup R dependencies for Quarto's knitr engine"
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages:
+            git::https://github.com/posit-dev/r-shinylive.git
+            any::knitr
+            any::rmarkdown
+            any::downlit
+            any::xml2
+
+      - name: "Set up Quarto"
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: "Render and Publish"
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**Step 2:** Before deploying the action, use the `quarto publish gh-pages` command to set up the necessary [`gh-pages` branch and repository GitHub Pages settings](https://quarto.org/docs/publishing/github-pages.html#source-branch). This ensures that GitHub Actions can publish your Quarto document correctly.
+
+By implementing this advanced setup, your Quarto document with the embedded shinylive app will automatically update whenever changes are pushed to the specified branches or when a release is published. This ensures that your audience always has access to the latest version of your interactive document.
+
 ## References
 
 - [Shinylive R Package](https://github.com/posit-dev/r-shinylive)

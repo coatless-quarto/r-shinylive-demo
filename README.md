@@ -16,13 +16,15 @@ Let's dive in!
 
 ## Sample App
 
+We'll be walking through the process of creating the following R ShinyLive application.
+
 ![Example of the Shinylive app running in a Quarto HTML Document](images/demo-r-shinylive-app-inbrowser.gif)
 
 You can see the live version built from the repository here:
 
 <https://coatless-quarto.github.io/r-shinylive-demo/>
 
-# Tutorial: Using r-shinylive for Static Shiny Apps in Quarto Documents
+# Using r-shinylive for Static Shiny Apps in Quarto Documents
 
 Are you interested in creating your own Quarto document with embedded static Shiny apps? This tutorial will guide you through the process of using the `r-shinylive` R package to achieve just that. Let's get started!
 

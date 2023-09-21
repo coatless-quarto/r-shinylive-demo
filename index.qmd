@@ -10,7 +10,7 @@ filters:
   - shinylive
 ---
 
-Interested in deploying a Shiny application for R within Quarto? Check out:
+Interested in deploying a Shiny application for R within Quarto without a server? Check out:
 
 <https://github.com/coatless-quarto/r-shinylive-demo>
 
@@ -22,6 +22,7 @@ For the demo, we're showing the source code used in Joe Cheng's [posit::conf(202
 #| standalone: true
 #| viewerHeight: 600
 library(shiny)
+library(bslib)
 
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
@@ -222,10 +223,7 @@ shinyApp(ui = ui, server = server)
 ```
 ````
 
-You can view a standalone version of Joe's app here:
-
-<https://github.com/coatless-quarto/r-shinylive-demo/blob/main/joe-cheng-r-shinylive.qmd>
-
+You can view a standalone version of Joe's app here: <R-shinylive-demo.qmd>
 
 ## Rendering Your Quarto Document
 

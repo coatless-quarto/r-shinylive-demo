@@ -10,12 +10,13 @@ filters:
 
 This document contains just the [Shiny App source code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299) used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile!)
 
-For a detailed breakdown, please see the <R-shinylive-demo.qmd> file.
+For a detailed breakdown, please see the <index.qmd> file.
 
 ```{shinylive-r}
 #| standalone: true
 #| viewerHeight: 600
 library(shiny)
+library(bslib)
 
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(

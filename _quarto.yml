@@ -6,12 +6,11 @@ project:
 website:
   title: "r-shinylive in Quarto"
   navbar:
-    background: primary
     search: true
     left:
       - text: "Tutorial (Home)"
         file: index.qmd
       - text: "Joe's Shiny App"
-        file: joe-cheng-r-shinylive.qmd
+        file: R-shinylive-demo.qmd
       - text: "Skeletal Template"
         file: template-r-shinylive.qmd

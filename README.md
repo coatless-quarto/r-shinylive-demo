@@ -8,6 +8,10 @@ For the demo, we're showing the App used in Joe Cheng's [posit::conf(2023) demo]
 
 ![Example of the Shinylive app running in a Quarto HTML Document](images/demo-r-shinylive-app-inbrowser.gif)
 
+You can see the live version built from the repository here:
+
+<https://coatless-quarto.github.io/r-shinylive-demo/>
+
 # Tutorial: Using r-shinylive for Static Shiny Apps in Quarto Documents
 
 Are you interested in creating your own Quarto document with embedded static Shiny apps? This tutorial will guide you through the process of using the `r-shinylive` R package to achieve just that. Let's get started!
@@ -103,6 +107,7 @@ With this in mind, let's use Joe's shiny app inside our code block. So, we'll en
 #| standalone: true
 #| viewerHeight: 600
 library(shiny)
+library(bslib)
 
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(
@@ -123,14 +128,8 @@ server <- function(input, output, session) {
   })
   
   output$plot <- renderPlot({
-    hist(data(),
-      breaks = 40,
-      xlim = c(-2, 2),
-      ylim = c(0, 1),
-      lty = "blank",
-      xlab = "value",
-      freq = FALSE,
-      main = ""
+    hist(data(), breaks = 40, xlim = c(-2, 2), ylim = c(0, 1),
+      lty = "blank", xlab = "value", freq = FALSE, main = ""
     )
     
     x <- seq(from = -2, to = 2, length.out = 500)
@@ -143,10 +142,8 @@ server <- function(input, output, session) {
 
     legend(legend = c("Normal", "Mean", "Sample mean"),
       col = c("black", "red", "blue"),
-      lty = c(1, 2, 1),
-      lwd = c(1, lwd, lwd),
-      x = 1,
-      y = 0.9
+      lty = c(1, 2, 1), lwd = c(1, lwd, lwd),
+      x = 1, y = 0.9
     )
   }, res=140)
 }

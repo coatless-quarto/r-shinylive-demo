@@ -6,7 +6,7 @@ project:
 website:
   title: "r-shinylive in Quarto"
   navbar:
-    search: true
+    search: false
     left:
       - text: "Tutorial (Home)"
         file: index.qmd
@@ -14,3 +14,12 @@ website:
         file: R-shinylive-demo.qmd
       - text: "Skeletal Template"
         file: template-r-shinylive.qmd
+
+format:
+  html:
+    grid: 
+      body-width: 1350px
+      sidebar-width: 200px
+      margin-width: 200px
+    toc: true
+

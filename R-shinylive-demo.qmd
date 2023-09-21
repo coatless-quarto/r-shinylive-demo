@@ -4,6 +4,8 @@ format:
   html:
     grid: 
       body-width: 1300px
+    resources: 
+      - shinylive-sw.js
 filters:
   - shinylive
 ---

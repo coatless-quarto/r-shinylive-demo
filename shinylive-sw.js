@@ -16,7 +16,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 function dirname(path) {
-  if (path === "/" || path === "")
+  if (path === "/" || path === "") {
     return "";
   }
   return path.replace(/[/]?[^/]+[/]?$/, "");

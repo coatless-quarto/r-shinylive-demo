@@ -3,7 +3,9 @@ project:
   resources: 
   - shinylive-sw.js
 
-website:
+website:  
+  repo-url: https://github.com/coatless-quarto/r-shinylive-demo
+  repo-actions: [edit, issue]
   title: "r-shinylive in Quarto"
   navbar:
     search: false

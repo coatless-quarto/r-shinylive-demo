@@ -1,0 +1,25 @@
+---
+title: "Template for r-shinylive Quarto document"
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+filters:
+  - shinylive
+---
+
+:::callout-important
+Please switch `{{shinylive-r}}` to `{shinylive-r}`. We've suppressed this example from running by using `{{}}`.
+:::
+
+```{{shinylive-r}}
+#| standalone: true
+
+ui <- ...
+
+server <- function(input, output, session) {
+  ...
+}
+
+shinyApp(ui, server)
+```

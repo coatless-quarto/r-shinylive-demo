@@ -2,7 +2,7 @@
 
 Interested in deploying a Shiny application for R within Quarto? This repository is for you!
 
-For the demo, we're showing the source code used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile! ([Source Code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299))
+For the demo, we're showing the App used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile! ([Source Code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299))
 
 ## Sample App
 
@@ -55,14 +55,16 @@ quarto add quarto-ext/shinylive
 
 **Step 4:** To include a Shiny app directly in your Quarto file (`.qmd`), you need to add a filter key for `shinylive` at the top of the desired Quarto file. Open your Quarto file and add the following YAML header:
 
-```yml
+```yaml
 filters:
   - shinylive
 ```
 
-**Step 5:** Place your Shiny application code within your Quarto file (`.qmd`) as follows:
+**Step 5:** Place your Shiny application code within your Quarto file (`.qmd`) as shown in the following example:
 
-```r
+You can insert the code for a Shiny application in a code block marked with `{shinylive-r}`. Below is a skeletal example of how your code block might look:
+
+````md
 ---
 title: "Our first r-shinylive Quarto document!"
 filters:
@@ -72,14 +74,92 @@ filters:
 ```{shinylive-r}
 #| standalone: true
 
-ui <- ...
+library(shiny)
 
+# Define your Shiny UI here
+ui <- fluidPage(
+  # Your UI components go here
+)
+
+# Define your Shiny server logic here
 server <- function(input, output, session) {
-  ...
+  # Your server code goes here
 }
 
+# Create and launch the Shiny app
 shinyApp(ui, server)
 ```
+````
+
+Please note that the code block must include `#| standalone: true`, which indicates that the code represents a complete standalone Shiny application. In the future, Quarto will hopefully support Shiny applications with parts spread throughout the document. 
+
+For an example file, you can refer to this bare-bones implementation: [template-r-shinylive.qmd](https://github.com/coatless-quarto/r-shinylive-demo/blob/main/template-r-shinylive.qmd)
+
+
+With this in mind, let's use Joe's shiny app inside our code block. So, we'll end up using:
+
+````md
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 600
+library(shiny)
+
+# Define UI for app that draws a histogram ----
+ui <- page_sidebar(
+  sidebar = sidebar(open = "open",
+    numericInput("n", "Sample count", 100),
+    checkboxInput("pause", "Pause", FALSE),
+  ),
+  plotOutput("plot", width=1100)
+)
+
+server <- function(input, output, session) {
+  data <- reactive({
+    input$resample
+    if (!isTRUE(input$pause)) {
+      invalidateLater(1000)
+    }
+    rnorm(input$n)
+  })
+  
+  output$plot <- renderPlot({
+    hist(data(),
+      breaks = 40,
+      xlim = c(-2, 2),
+      ylim = c(0, 1),
+      lty = "blank",
+      xlab = "value",
+      freq = FALSE,
+      main = ""
+    )
+    
+    x <- seq(from = -2, to = 2, length.out = 500)
+    y <- dnorm(x)
+    lines(x, y, lwd=1.5)
+    
+    lwd <- 5
+    abline(v=0, col="red", lwd=lwd, lty=2)
+    abline(v=mean(data()), col="blue", lwd=lwd, lty=1)
+
+    legend(legend = c("Normal", "Mean", "Sample mean"),
+      col = c("black", "red", "blue"),
+      lty = c(1, 2, 1),
+      lwd = c(1, lwd, lwd),
+      x = 1,
+      y = 0.9
+    )
+  }, res=140)
+}
+
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+```
+````
+
+You can view a standalone version of Joe's app here:
+
+<https://github.com/coatless-quarto/r-shinylive-demo/blob/main/joe-cheng-r-shinylive.qmd>
+
 
 ## Rendering Your Quarto Document
 
@@ -93,21 +173,6 @@ Or type in the Terminal tab:
 quarto preview R-shinylive-demo.qmd --no-browser --no-watch-inputs
 ```
 
-## Folder Structure
-
-During the render process, the output directory should contain the following structure:
-
-```sh
-.
-├── _extensions
-│   └── quarto-ext/shinylive # Added by 'quarto add'
-├── _quarto.yml              # Created by 'quarto create'
-├── R-shinylive-demo.html
-├── R-shinylive-demo.qmd
-├── R-shinylive-demo_files
-│   └── libs
-└── shinylive-sw.js
-```
 
 ## Folder Structure
 
@@ -227,9 +292,11 @@ jobs:
 
 By implementing this advanced setup, your Quarto document with the embedded shinylive app will automatically update whenever changes are pushed to the specified branches or when a release is published. This ensures that your audience always has access to the latest version of your interactive document.
 
+# Fin
+
+Now you have successfully integrated static Shiny apps into your Quarto documents using the `r-shinylive` package. Happy Quarto + r-shinyliving!
+
 ## References
 
 - [Shinylive R Package](https://github.com/posit-dev/r-shinylive)
 - [Shinylive Quarto Extension](https://github.com/quarto-ext/shinylive): Static Shiny apps as Quarto code chunks
-
-Now you have successfully integrated static Shiny apps into your Quarto documents using the `r-shinylive` package. Happy Quarto + r-shinyliving!

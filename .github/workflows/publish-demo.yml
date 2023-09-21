@@ -32,20 +32,15 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
+            git::posit-dev/r-shinylive
             any::knitr
             any::rmarkdown
             any::downlit
             any::xml2
-            any::posit-dev/r-shinylive
 
       # Back to our regularly scheduled Quarto output
       - name: "Set up Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: "Initialize a quarto project"
-        run: |
-          quarto create project website .
-        shell: bash
 
       - name: "Render and Publish"
         uses: quarto-dev/quarto-actions/publish@v2

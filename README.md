@@ -1,6 +1,6 @@
 # r-shinylive-demo
 
-Interested in deploying a Shiny application for R within Quarto? This is the repository for you! Here's a summary of what you can find in the repository:
+Interested in deploying a serverless Shiny application for R within Quarto? This is the repository for you! Here's a summary of what you can find in the repository:
 
 - **[index.qmd](index.qmd):** This file contains a tutorial that provides step-by-step instructions and guidance on using `r-shinylive` to embed Shiny applications in Quarto documents.
 
@@ -8,7 +8,7 @@ Interested in deploying a Shiny application for R within Quarto? This is the rep
 
 - **[template-r-shinylive.qmd](template-r-shinylive.qmd):** This file provides a skeleton template that you can use to populate your own Shiny apps. It serves as a starting point for creating your interactive Quarto documents with Shiny applications. Please note that you will still need to install the required software as mentioned in the tutorial.
 
-- **[_quarto.yml](_quarto.yml):** This configuration file is essential for Quarto and `shinylive` to work together effectively. 
+- **[_quarto.yml](_quarto-default.yml):** This configuration file is essential for Quarto and `shinylive` to work together effectively. 
 
 - **[.github/workflows/publish-demo.yml](.github/workflows/publish-demo.yml):** This file contains a sample workflow configuration for creating a website that embeds R Shiny applications using GitHub Actions and deploys it to GitHub Pages.
 
@@ -23,6 +23,14 @@ We'll be walking through the process of creating the following R Shinylive appli
 You can see the live version built from the repository here:
 
 <https://coatless-quarto.github.io/r-shinylive-demo/>
+
+## Video Tutorial
+
+Prefer a hands-on visual guide? Check out the following YouTube video:
+
+[![Creating a Serverless Shiny App using Quarto with R Shinylive](https://img.youtube.com/vi/6y2FnAugP8E/0.jpg)](https://www.youtube.com/watch?v=6y2FnAugP8E)
+
+We'll go through every step and provide some commentary along the way!
 
 # Using r-shinylive for Serverless Shiny Apps in Quarto Documents
 
@@ -49,13 +57,23 @@ quarto create project default
 
 ![Screenshot showing the Terminal tab of RStudio with the command to create a Quarto project.](images/create-quarto-r-shiny-live-project.png)
 
-During project creation, you'll be prompted to provide a directory name. This name will also serve as the Quarto document filename. Please note that if you skip this step, a `_quarto.yml` file won't be generated, resulting in an error when you attempt to render the document.
+
+While creating the project, you'll be prompted to specify a directory name. This name will also serve as the filename for your Quarto document. It's crucial to note that skipping this step will result in the absence of a `_quarto.yml` file, leading to an error when you attempt to render the document. The error message will resemble the following:
 
 ```md
 ERROR:
 The shinylive extension must be used in a Quarto project directory
 (with a _quarto.yml file).
 ```
+
+Ensure that the contents of the `_quarto.yml` file match the following structure:
+
+```yaml
+project:
+  title: "R-shinylive-demo"
+```
+
+Here, the `title` field should contain the name of the Quarto file up to the extension.
 
 ## Installing the Quarto Extension for r-shinylive
 

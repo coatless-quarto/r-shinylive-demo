@@ -23,3 +23,29 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+Full Skeletal Document Source: 
+
+````md
+---
+title: "Template for r-shinylive Quarto document"
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
+filters:
+  - shinylive
+---
+
+```{shinylive-r}
+#| standalone: true
+
+ui <- ...
+
+server <- function(input, output, session) {
+  ...
+}
+
+shinyApp(ui, server)
+```
+````

@@ -301,7 +301,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
-            git::https://github.com/posit-dev/r-shinylive.git
+            any::shinylive
             any::knitr
             any::rmarkdown
             any::downlit

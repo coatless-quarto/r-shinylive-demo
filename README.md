@@ -135,6 +135,7 @@ With this in mind, let's use Joe's shiny app inside our code block. So, we'll en
 #| standalone: true
 #| viewerHeight: 600
 library(shiny)
+library(bslib)
 
 # Define UI for app that draws a histogram ----
 ui <- page_sidebar(

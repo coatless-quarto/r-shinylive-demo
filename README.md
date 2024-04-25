@@ -14,6 +14,20 @@ Interested in deploying a serverless Shiny application for R within Quarto? This
 
 Let's dive in! 
 
+### Updates
+
+- **4/25/2025**
+  - We've switched the GitHub Pages to use GitHub Actions to 
+    deploy the website instead of commiting into the GitHub Pages branch.
+  - We've also pinned the version of `shinylive` being used to v0.1.1 to ensure
+    consistency with the `quarto-ext/shinylive` Quarto extension.
+- **10/26/2023**
+  - We've updated the version of `shinylive` being used to v0.1.0 to ensure
+    consistency with the `quarto-ext/shinylive` Quarto extension.
+  - Ensured that `bslib` was loaded for the `page_sidebar()` function.
+- **09/21/2023**
+  - Initial release of the tutorial.
+
 ## Sample App
 
 We'll be walking through the process of creating the following R Shinylive application.
@@ -38,14 +52,16 @@ Are you interested in creating your own Quarto document with embedded static Shi
 
 ## Installation
 
-**Step 1:** Install the `r-shinylive` R package. It's currently hosted on GitHub and can be obtained from the R console using the following command:
+**Step 1:** Install the `r-shinylive` R package from CRAN. It can be obtained from the R console using the following command:
 
 ```r
-# Install the 'pak' package manager if you haven't already
-install.packages("pak")
-# Install 'r-shinylive' using 'pak'
-pak::pak("posit-dev/r-shinylive")
+install.packages("shinylive")
 ```
+
+> [!NOTE]
+> 
+> This step differs from when the tutorial and video were written as the 
+> `shinylive` package was only able to be obtained from GitHub.
 
 ## Setting Up Your Quarto Project
 
@@ -278,21 +294,30 @@ on:
   push:
     branches: [main, master]
   release:
-    types: [published]
-  workflow_dispatch:
+      types: [published]
+  workflow_dispatch: {}
 
 name: demo-website
 
 jobs:
   demo-website:
     runs-on: ubuntu-latest
+    # Only restrict concurrency for non-PR jobs
     concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: quarto-website-${{ github.event_name != 'pull_request' || github.run_id }}
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v4
+
+      # To render using knitr, we need a few more setup steps...
+      # If we didn't want the examples to use `engine: knitr`, we could
+      # skip a few of the setup steps.
+      - name: "Setup pandoc"
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: "Setup R"
         uses: r-lib/actions/setup-r@v2
@@ -301,24 +326,46 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
-            any::shinylive
+            cran::shinylive@0.1.1 ## Pin version to ensure consistency
             any::knitr
             any::rmarkdown
             any::downlit
             any::xml2
 
+      # Back to our regularly scheduled Quarto output
       - name: "Set up Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: "Render and Publish"
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Render the Quarto file
+      - name: "Render working directory"
+        uses: quarto-dev/quarto-actions/render@v2
+
+      # Upload a tar file that will work with GitHub Pages
+      # Make sure to set a retention day to avoid running into a cap
+      # This artifact shouldn't be required after deployment onto pages was a success.
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with: 
+          retention-days: 1
+      
+      # Use an Action deploy to push the artifact onto GitHub Pages
+      # This requires the `Action` tab being structured to allow for deployment
+      # instead of using `docs/` or the `gh-pages` branch of the repository
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
 ```
 
-**Step 2:** Before deploying the action, use the `quarto publish gh-pages` command to set up the necessary [`gh-pages` branch and repository GitHub Pages settings](https://quarto.org/docs/publishing/github-pages.html#source-branch). This ensures that GitHub Actions can publish your Quarto document correctly.
+> [!NOTE]
+> We have pinned the version of `shinylive` package on CRAN to v0.1.1 to ensure
+> consistency with the `quarto-ext/shinylive` Quarto extension. 
+
+**Step 2:** Enable GitHub Pages deployment using GitHub Actions in your
+repository by going to the repository's `Settings` tab, selecting `Pages`, and
+then under the build and deployment section set scource to GitHub Actions. Please
+make sure to also check the **Enforce HTTPS** option.
+
+![Enabling GitHub Pages deployment through GitHub Actions](images/enable-github-pages-deployment-by-github-actions.png)
 
 By implementing this advanced setup, your Quarto document with the embedded shinylive app will automatically update whenever changes are pushed to the specified branches or when a release is published. This ensures that your audience always has access to the latest version of your interactive document.
 

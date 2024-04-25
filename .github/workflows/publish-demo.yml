@@ -3,8 +3,8 @@ on:
     branches: [main, master]
   release:
       types: [published]
-  workflow_dispatch:
-    
+  workflow_dispatch: {}
+
 name: demo-website
 
 jobs:
@@ -12,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     # Only restrict concurrency for non-PR jobs
     concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: quarto-website-${{ github.event_name != 'pull_request' || github.run_id }}
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v4
@@ -32,7 +34,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
-            any::shinylive
+            cran::shinylive@0.1.1
             any::knitr
             any::rmarkdown
             any::downlit
@@ -42,9 +44,21 @@ jobs:
       - name: "Set up Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: "Render and Publish"
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Render the Quarto file
+      - name: "Render working directory"
+        uses: quarto-dev/quarto-actions/render@v2
+
+      # Upload a tar file that will work with GitHub Pages
+      # Make sure to set a retention day to avoid running into a cap
+      # This artifact shouldn't be required after deployment onto pages was a success.
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with: 
+          retention-days: 1
+      
+      # Use an Action deploy to push the artifact onto GitHub Pages
+      # This requires the `Action` tab being structured to allow for deployment
+      # instead of using `docs/` or the `gh-pages` branch of the repository
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

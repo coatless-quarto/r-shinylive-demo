@@ -14,11 +14,21 @@ Interested in deploying a serverless Shiny application for R within Quarto? This
 
 Let's dive in! 
 
+> [!NOTE]
+>
+> Please note that this guide is **not** affiliated with Posit, Quarto, Shiny,
+> or Shinylive project. It is a community-driven tutorial to help you get started
+> using Shinylive with Quarto. 
+
 ### Updates
 
-- **4/25/2025**
-  - We've switched the GitHub Pages to use GitHub Actions to 
-    deploy the website instead of commiting into the GitHub Pages branch.
+- **8/01/2024**
+  - We've also pinned the version of `shinylive` R package to v0.2.0 to
+    gain access to improvements regarding webR v0.4.0 and packaging `shiny`
+    packages with the deployment to improve reproducibility.
+- **4/25/2024**
+  - We've switched how we used GitHub Pages to deploy Quarto website 
+    to use GitHub Actions instead of committing into the GitHub Pages branch.
   - We've also pinned the version of `shinylive` being used to v0.1.1 to ensure
     consistency with the `quarto-ext/shinylive` Quarto extension.
 - **10/26/2023**
@@ -326,7 +336,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
-            cran::shinylive@0.1.1 ## Pin version to ensure consistency
+            cran::shinylive@0.2.0 ## Pin version to ensure consistency
             any::knitr
             any::rmarkdown
             any::downlit
@@ -357,7 +367,7 @@ jobs:
 ```
 
 > [!NOTE]
-> We have pinned the version of `shinylive` package on CRAN to v0.1.1 to ensure
+> We have pinned the version of `shinylive` package on CRAN to v0.2.0 to ensure
 > consistency with the `quarto-ext/shinylive` Quarto extension. 
 
 **Step 2:** Enable GitHub Pages deployment using GitHub Actions in your

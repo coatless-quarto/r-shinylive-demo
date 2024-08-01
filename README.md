@@ -1,4 +1,4 @@
-# r-shinylive-demo
+# Creating an R Shinylive App inside a Quarto Document
 
 Interested in deploying a serverless Shiny application for R within Quarto? This is the repository for you! Here's a summary of what you can find in the repository:
 
@@ -20,10 +20,18 @@ Let's dive in!
 > or Shinylive project. It is a community-driven tutorial to help you get started
 > using Shinylive with Quarto. 
 
+### Other Guides
+
+- Creating an R Shinylive App inside a Quarto Document
+- [Deploying an R Shinylive App via GitHub Pages through GitHub Actions](https://github.com/coatless-tutorials/convert-shiny-app-r-shinylive)
+- [Data Inclusion in a Shinylive App](https://tutorials.thecoatlessprofessor.com/r-shinylive-data-include/)
+- [Deploying an R Shiny Dashboard App through R Shinylive](https://github.com/coatless-dashboard/r-shinylive-dashboard-app)
+- [Deploying a Python Shinylive App via GitHub Pages through GitHub Actions](https://github.com/coatless-tutorials/convert-py-shiny-app-to-py-shinylive-app)
+
 ### Updates
 
 - **8/01/2024**
-  - We've also pinned the version of `shinylive` R package to v0.2.0 to
+  - We've updated the pinned version of the `shinylive` R package to v0.2.0 to
     gain access to improvements regarding webR v0.4.0 and packaging `shiny`
     packages with the deployment to improve reproducibility.
 - **4/25/2024**

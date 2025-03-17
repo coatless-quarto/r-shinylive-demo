@@ -16,11 +16,11 @@ Interested in deploying a Shiny application for R within Quarto without a server
 
 For the demo, we're showing the source code used in Joe Cheng's [posit::conf(2023) demo](https://jcheng5.github.io/posit-conf-2023-shinylive/#/option-3-include-1) (Warning: Large file size, don't open on mobile!) [[Source Code](https://github.com/jcheng5/posit-conf-2023-shinylive/blob/d385ad18eb0d867f25cc4721d9e8c25aeb2dfb90/slides.qmd#L299)]
 
-> [!NOTE]
->
-> Please note that this guide is **not** affiliated with Posit, Quarto, Shiny,
-> or Shinylive project. It is a community-driven tutorial to help you get started
-> using Shinylive with Quarto. 
+:::[.callout-note]
+Please note that this guide is **not** affiliated with Posit, Quarto, Shiny,
+or Shinylive project. It is a community-driven tutorial to help you get started
+using Shinylive with Quarto. 
+:::
 
 ### Other Guides
 

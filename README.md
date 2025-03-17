@@ -30,6 +30,11 @@ Let's dive in!
 
 ### Updates
 
+- **3/17/2025**
+  - We've bumped the version of the `shinylive` R package to v0.3.0, upgraded
+    the `quarto-shinylive` extension included in the repository, and 
+    updated the version of GitHub Actions to either v3 or v4 to avoid deprecation
+    warnings.
 - **8/01/2024**
   - We've updated the pinned version of the `shinylive` R package to v0.2.0 to
     gain access to improvements regarding webR v0.4.0 and packaging `shiny`
@@ -344,7 +349,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
-            cran::shinylive@0.2.0 ## Pin version to ensure consistency
+            cran::shinylive@0.3.0 ## Pin version to ensure consistency
             any::knitr
             any::rmarkdown
             any::downlit
@@ -362,7 +367,7 @@ jobs:
       # Make sure to set a retention day to avoid running into a cap
       # This artifact shouldn't be required after deployment onto pages was a success.
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with: 
           retention-days: 1
       
@@ -371,11 +376,11 @@ jobs:
       # instead of using `docs/` or the `gh-pages` branch of the repository
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 ```
 
 > [!NOTE]
-> We have pinned the version of `shinylive` package on CRAN to v0.2.0 to ensure
+> We have pinned the version of `shinylive` package on CRAN to v0.3.0 to ensure
 > consistency with the `quarto-ext/shinylive` Quarto extension. 
 
 **Step 2:** Enable GitHub Pages deployment using GitHub Actions in your

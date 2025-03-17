@@ -34,7 +34,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
-            cran::shinylive@0.2.0
+            cran::shinylive@0.3.0
             any::knitr
             any::rmarkdown
             any::downlit
@@ -52,7 +52,7 @@ jobs:
       # Make sure to set a retention day to avoid running into a cap
       # This artifact shouldn't be required after deployment onto pages was a success.
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with: 
           retention-days: 1
       
@@ -61,4 +61,4 @@ jobs:
       # instead of using `docs/` or the `gh-pages` branch of the repository
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
